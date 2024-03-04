@@ -1,0 +1,31 @@
+name: Build
+on:
+    push:
+        branches: [master, 2.5.0]
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+        steps:
+    
+          - name: Fetch Sources
+            uses: actions/checkout@v3
+    
+          - name: Setup Java
+            uses: actions/setup-java@v3
+            with:
+                java-version: 17
+                distribution: 'temurin'
+    
+          - name: Build
+            run: |
+              mvn package
+            
+          - name: Upload Jar
+            uses: actions/upload-artifact@v3
+            with:
+                name: plugin
+                path: target/MTVehicles.jar
+    
