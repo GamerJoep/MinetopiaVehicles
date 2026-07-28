@@ -42,6 +42,22 @@ public final class VehicleUtils {
     public static HashMap<Player, String> openedTrunk = new HashMap<>();
 
     /**
+     * Check whether there is enough free space around a location to spawn a vehicle (so it won't get stuck between walls).
+     * @param location Location to check
+     * @return True if the location has enough free space
+     */
+    public static boolean hasSpawnSpace(Location location) {
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                for (int y = 0; y <= 1; y++) {
+                    if (!location.clone().add(x, y, z).getBlock().isPassable()) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Spawn a vehicle
      * @param licensePlate Vehicle's license plate
      * @param location Location where the vehicle should be spawned

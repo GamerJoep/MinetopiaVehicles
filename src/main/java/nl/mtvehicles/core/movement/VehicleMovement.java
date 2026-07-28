@@ -383,6 +383,11 @@ public class VehicleMovement {
      */
     @ToDo("Trapdoors")
     protected boolean blockCheck() {
+        if (!isPassable(standMain.getLocation().getBlock()) || !isPassable(standMain.getLocation().clone().add(0, 1, 0).getBlock())) {
+            VehicleData.speed.put(license, 0.0);
+            return false;
+        }
+
         final Location loc = getLocationOfBlockAhead();
         final String locY = String.valueOf(standMain.getLocation().getY());
         final Location locBlockAbove = new Location(loc.getWorld(), loc.getX(), loc.getY() + 1, loc.getZ(), loc.getYaw(), loc.getPitch());
