@@ -2,6 +2,7 @@ package nl.mtvehicles.core.infrastructure.vehicle;
 
 import nl.mtvehicles.core.infrastructure.annotations.ToDo;
 import nl.mtvehicles.core.infrastructure.enums.VehicleType;
+import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -51,6 +52,10 @@ public class VehicleData {
     public static Set<String> brakingBlocked = new HashSet<>();
     public static HashMap<String, Set<String>> lastRegions = new HashMap<>();
     public static HashMap<String, Boolean> destroyedVehicles = new HashMap<>();
+    /**
+     * Last location where the vehicle was not embedded in a solid block, used to pull it back out if it clips into a wall.
+     */
+    public static HashMap<String, Location> lastSafeLocation = new HashMap<>();
     /**
      * @see VehicleUtils#openedTrunk
      * @since 2.5.1
