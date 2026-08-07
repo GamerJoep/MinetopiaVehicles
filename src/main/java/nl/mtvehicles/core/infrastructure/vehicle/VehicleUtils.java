@@ -1051,6 +1051,7 @@ public final class VehicleUtils {
         VehicleType vehicleType = VehicleData.type.get(licensePlate);
 
         VehicleData.lastRegions.remove(licensePlate); // doesn't do anything if not set
+        VehicleData.lastSafeLocation.remove(licensePlate);
         if(vehicleType == null) return true;
 
         if (vehicleType.isHelicopter()) {

@@ -387,8 +387,10 @@ public class VehicleMovement {
         final boolean isOnCarpet = currentBlock.getType().toString().contains("CARPET");
         if ((!isPassable(currentBlock) && !isOnCarpet) || !isPassable(standMain.getLocation().clone().add(0, 1, 0).getBlock())) {
             VehicleData.speed.put(license, 0.0);
+            pullOutOfWall();
             return false;
         }
+        VehicleData.lastSafeLocation.put(license, standMain.getLocation().clone());
 
         final Location loc = getLocationOfBlockAhead();
         final String locY = String.valueOf(standMain.getLocation().getY());
@@ -918,6 +920,16 @@ public class VehicleMovement {
      */
     protected void pushVehicleDown(double minus){
         pushVehicleUp(-minus);
+    }
+
+    /**
+     * Teleport the vehicle back to the last location where it wasn't embedded in a solid block,
+     * so it doesn't get stuck (and suffocate) inside walls it clips into.
+     */
+    protected void pullOutOfWall(){
+        final Location safeLocation = VehicleData.lastSafeLocation.get(license);
+        if (safeLocation == null) return;
+        schedulerRun(() -> standMain.teleport(safeLocation));
     }
 
     /**
