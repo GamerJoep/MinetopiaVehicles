@@ -383,7 +383,9 @@ public class VehicleMovement {
      */
     @ToDo("Trapdoors")
     protected boolean blockCheck() {
-        if (!isPassable(standMain.getLocation().getBlock()) || !isPassable(standMain.getLocation().clone().add(0, 1, 0).getBlock())) {
+        final Block currentBlock = standMain.getLocation().getBlock();
+        final boolean isOnCarpet = currentBlock.getType().toString().contains("CARPET");
+        if ((!isPassable(currentBlock) && !isOnCarpet) || !isPassable(standMain.getLocation().clone().add(0, 1, 0).getBlock())) {
             VehicleData.speed.put(license, 0.0);
             return false;
         }
